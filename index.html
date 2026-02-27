@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>vino | new media artist</title>
+    <meta name="description" content="Portfolio of a new media artist exploring the boundaries between physical and digital realms. Interactive installations, generative art, and digital experiences.">
+    <meta name="keywords" content="new media artist, digital art, generative art, installation, interactive art, VR, AR, projection mapping, turin">
+    <meta name="author" content="vino">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vino.xyz/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vino.xyz/">
+    <meta property="og:title" content="vino | new media artist">
+    <meta property="og:description" content="Portfolio of a new media artist exploring the boundaries between physical and digital realms.">
+    <meta property="og:image" content="https://vino.xyz/assets/og-image.jpg">
+    <meta property="og:site_name" content="vino portfolio">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://vino.xyz/">
+    <meta name="twitter:title" content="vino | new media artist">
+    <meta name="twitter:description" content="Portfolio of a new media artist exploring the boundaries between physical and digital realms.">
+    <meta name="twitter:image" content="https://vino.xyz/assets/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <header id="menu-bar">
+        <div class="menu-left">
+            <span class="menu-logo">◈</span>
+            <span class="menu-title">PORTFOLIO</span>
+        </div>
+        <nav class="menu-nav" role="navigation" aria-label="Main navigation">
+            <button class="menu-btn active" data-section="home" aria-current="page">home</button>
+            <button class="menu-btn" data-section="about">about</button>
+            <button class="menu-btn" data-section="works">works</button>
+            <button class="menu-btn" data-section="contact">contact</button>
+        </nav>
+        <div class="menu-right">
+            <span class="menu-time" id="system-time" aria-live="polite">00:00</span>
+        </div>
+    </header>
+
+    <main id="desktop" role="main">
+        <div id="windows-container"></div>
+        
+        <div id="welcome-overlay" class="hidden" aria-hidden="true">
+            <div class="welcome-content">
+                <h1 class="welcome-title">welcome</h1>
+                <p class="welcome-text">click anywhere to enter</p>
+            </div>
+        </div>
+    </main>
+
+    <footer id="status-bar" role="contentinfo">
+        <div class="status-left">
+            <span class="status-item" id="status-section" aria-live="polite">READY</span>
+        </div>
+    </footer>
+
+    <div id="custom-cursor" aria-hidden="true"></div>
+
+    <template id="window-template">
+        <div class="window" data-window-id="" role="dialog" aria-labelledby="window-title">
+            <div class="window-header">
+                <div class="window-controls">
+                    <button class="window-btn close" aria-label="Close window">×</button>
+                    <button class="window-btn maximize" aria-label="Maximize window">□</button>
+                </div>
+                <div class="window-title"></div>
+                <div class="window-spacer"></div>
+            </div>
+            <div class="window-content"></div>
+            <div class="window-resize-handle" aria-hidden="true"></div>
+        </div>
+    </template>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "vino",
+        "url": "https://vino.xyz",
+        "jobTitle": "New Media Artist",
+        "description": "New media artist exploring the boundaries between physical and digital realms",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Turin",
+            "addressCountry": "Italy"
+        },
+        "sameAs": [
+            "https://instagram.com/vino.exe",
+        ],
+        "knowsAbout": ["Generative Art", "Installation", "VR", "AR", "Projection Mapping", "Sound Design"]
+    }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="three-scene.js"></script>
+    <script src="js/window-manager.js"></script>
+    <script src="js/sections.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
