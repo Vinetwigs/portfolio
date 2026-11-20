@@ -181,10 +181,6 @@ class Portfolio {
             // Hover - preload first image
             card.addEventListener('mouseenter', () => {
                 card.dataset.hovered = 'true';
-                const img = card.querySelector('.work-card-image img');
-                if (img && img.dataset.src) {
-                    img.src = img.dataset.src;
-                }
             });
             
             card.addEventListener('mouseleave', () => {
@@ -216,24 +212,7 @@ class Portfolio {
             grid.style.opacity = '0';
             
             setTimeout(() => {
-                grid.innerHTML = filtered.map(work => {
-                    const imgSrc = work.images && work.images.length > 0 
-                        ? work.images[0] 
-                        : 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180"><rect fill="%23000" width="320" height="180"/><text x="50%" y="50%" fill="%23ff0000" text-anchor="middle" dy=".3em" font-family="monospace">no image</text></svg>';
-                    
-                    return `
-                        <div class="work-card" data-work-id="${work.id}">
-                            <div class="work-card-image">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="${imgSrc}" alt="${work.title}" loading="lazy">
-                            </div>
-                            <div class="work-card-title">${work.title}</div>
-                            <div class="work-card-meta">
-                                <span>${work.year}</span>
-                                <span>${work.category || 'installation'}</span>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
+                grid.innerHTML = filtered.map(work => SectionContent.renderWorkCard(work)).join('');
                 
                 grid.style.opacity = '1';
                 
@@ -258,7 +237,7 @@ class Portfolio {
         
         this.windowManager.createWindow({
             id: 'work-' + workId,
-            title: work.title.toLowerCase(),
+            title: (work.shortTitle || work.title).toLowerCase(),
             width: 800,
             height: 600,
             content: content,

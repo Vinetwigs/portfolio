@@ -106,6 +106,7 @@ class WindowManager {
         this.windows.set(id, windowData);
         
         this.focusWindow(id);
+        this.updateWindowCount();
         
         windowEl.style.opacity = '0';
         windowEl.style.transform = 'scale(0.95)';
@@ -137,11 +138,26 @@ class WindowManager {
             windowEl.remove();
             this.windows.delete(id);
             
+            this.updateWindowCount();
+            
             if (this.windows.size > 0) {
                 const firstId = this.windows.keys().next().value;
                 this.focusWindow(firstId);
+            } else {
+                // No windows left, reset status
+                const sectionEl = document.getElementById('status-section');
+                if (sectionEl) {
+                    sectionEl.textContent = 'READY';
+                }
             }
         }, 300);
+    }
+    
+    updateWindowCount() {
+        const countEl = document.getElementById('status-windows');
+        if (countEl) {
+            countEl.textContent = `windows: ${this.windows.size}`;
+        }
     }
     
     maximizeWindow(id) {
@@ -185,6 +201,12 @@ class WindowManager {
             windowData.element.classList.add('active');
             this.activeWindow = id;
             
+            // Update footer section text
+            const sectionEl = document.getElementById('status-section');
+            if (sectionEl) {
+                sectionEl.textContent = windowData.title || id;
+            }
+            
             this.zIndexCounter++;
             windowData.element.style.zIndex = this.zIndexCounter;
         }
@@ -227,8 +249,21 @@ class WindowManager {
             const dx = e.clientX - this.dragState.startX;
             const dy = e.clientY - this.dragState.startY;
             
-            this.dragState.window.style.left = (this.dragState.offsetX + dx) + 'px';
-            this.dragState.window.style.top = (this.dragState.offsetY + dy) + 'px';
+            let newLeft = this.dragState.offsetX + dx;
+            let newTop = this.dragState.offsetY + dy;
+            
+            // Constrain to viewport
+            const windowRect = this.dragState.window.getBoundingClientRect();
+            const minX = -windowRect.width + 100;
+            const maxX = window.innerWidth - 50;
+            const minY = 10;
+            const maxY = window.innerHeight - 50;
+            
+            newLeft = Math.max(minX, Math.min(maxX, newLeft));
+            newTop = Math.max(minY, Math.min(maxY, newTop));
+            
+            this.dragState.window.style.left = newLeft + 'px';
+            this.dragState.window.style.top = newTop + 'px';
         }
         
         if (this.resizeState.window) {
